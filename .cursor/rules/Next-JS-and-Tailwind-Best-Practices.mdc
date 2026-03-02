@@ -1,0 +1,43 @@
+---
+description: 
+alwaysApply: true
+---
+
+# Next.js (App Router) + Tailwind + TypeScript Rules
+
+Applies when generating or modifying React/Next.js components.
+
+## Stack assumptions
+- Next.js App Router (use server components by default; add "use client" only when needed)
+- Tailwind CSS for styling
+- Biome for formatting/linting
+
+## Implementation requirements
+1. Before building a new section/component, inspect:
+   - config/site.ts
+   - config/sections.ts
+   Use config values instead of hardcoding business info, colors, or navigation.
+
+2. TypeScript:
+   - No `any`. Use `unknown` + runtime checks when needed.
+   - Explicitly type public boundaries (component props, exported functions, return types when unclear).
+   - Use inference for local variables unless it improves clarity.
+
+3. Tailwind:
+   - Prefer Tailwind utility classes over custom CSS.
+   - Do not introduce new arbitrary colors; use tokens from siteConfig.branding.colors (or Tailwind theme tokens if mapped).
+
+4. Next.js patterns:
+   - Use `next/image` for images where appropriate.
+   - Use `next/link` for internal links.
+   - Use loading/error states in App Router via `loading.tsx` / `error.tsx` or component-level skeletons when relevant.
+   - Data fetching: use server actions / route handlers / server components as appropriate (do not use `getServerSideProps` / `getStaticProps`).
+
+5. Accessibility:
+   - Semantic HTML first.
+   - Labels for inputs, aria-* only when needed.
+   - Keyboard navigable interactive elements.
+
+6. Quality:
+   - Include empty-state, error-state, and loading-state when the UI depends on async data.
+   - Keep components modular and reusable.

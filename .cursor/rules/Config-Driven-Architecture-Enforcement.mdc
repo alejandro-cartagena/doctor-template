@@ -1,0 +1,33 @@
+---
+description: 
+alwaysApply: true
+---
+
+This project is config-driven.
+
+Before generating or modifying any section, component, or layout file:
+
+1. Inspect:
+   - config/site.ts
+   - config/sections.ts
+
+2. Sections must:
+   - Match a valid HomeSectionId
+   - Be selectable via HOME_SECTION_IDS
+   - Support variant naming conventions (section-id, section-id-v2, etc.)
+   - Not introduce new unregistered section IDs
+
+3. Components must:
+   - Use values from siteConfig (business info, branding, navigation)
+   - Respect siteConfig.branding.colors
+   - Use siteConfig.navigation for menus
+
+4. Never hardcode:
+   - Business name
+   - Phone
+   - Address
+   - Colors
+   - Navigation links
+   - Section order
+
+All reusable data must come from the config system.
