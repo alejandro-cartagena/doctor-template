@@ -1,5 +1,6 @@
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import TopBar from "@/components/layout/TopBar";
 import Hero from "@/components/sections/Hero/Hero";
 import Intro from "@/components/sections/Introduction/Intro";
 import Services from "@/components/sections/Services/Services";
@@ -11,6 +12,7 @@ import HeroV2 from "@/components/sections/Hero/Herov2";
 export default function Home() {
   return (
     <>
+      <TopBar />
       <Navbar />
       <main>
         {/* <Hero /> */}

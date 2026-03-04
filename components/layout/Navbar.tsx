@@ -99,7 +99,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`z-50 h-20 transition-all duration-300 ${isFixed ? "fixed inset-x-0 top-0" : "sticky top-0"} ${navBg}`}
+        className={`z-50 h-20 transition-all duration-300 ${isFixed ? "fixed inset-x-0 top-9" : "sticky top-9"} ${navBg}`}
         style={{
           ...navBgStyle,
           ["--accent" as string]: colors.accent.primary,
