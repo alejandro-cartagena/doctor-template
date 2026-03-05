@@ -9,6 +9,7 @@ import PracticeHighlights from "@/components/sections/Practice-Highlights/Practi
 
 // HERO V2
 import HeroV2 from "@/components/sections/Hero/Herov2";
+import HeroV3 from "@/components/sections/Hero/HeroV3";
 
 export default function Home() {
   return (
@@ -17,7 +18,8 @@ export default function Home() {
       <Navbar />
       <main>
         {/* <Hero /> */}
-        <HeroV2 />
+        {/* <HeroV2 /> */}
+        <HeroV3 />
         <PracticeHighlights />
         <Intro />
         <Services />

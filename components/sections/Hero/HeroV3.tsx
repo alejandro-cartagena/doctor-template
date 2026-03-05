@@ -10,7 +10,7 @@ type Stat = {
   value: string;
 };
 
-interface HeroV2Props {
+interface HeroV3Props {
   titleLines?: string[];
   description?: string;
   rating?: number;
@@ -59,20 +59,13 @@ const defaultBackgroundImage =
 const DURATION_MS = 1200;
 const EASE_OUT = (t: number) => 1 - (1 - t) * (1 - t);
 
-function hexToRgba(hex: string, alpha: number): string {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
 function parseStatValue(value: string): { num: number; suffix: string } {
   const match = value.match(/^(\d+)(\+?)$/);
   if (!match) return { num: 0, suffix: "" };
   return { num: parseInt(match[1], 10), suffix: match[2] ?? "" };
 }
 
-export default function HeroV2({
+export default function HeroV3({
   titleLines = defaultTitle,
   description = defaultDescription,
   rating = siteConfig.rating ?? 4.9,
@@ -83,7 +76,7 @@ export default function HeroV2({
   secondaryCtaHref = "/#services",
   stats = defaultStats,
   backgroundImageUrl = defaultBackgroundImage,
-}: HeroV2Props) {
+}: HeroV3Props) {
   const { colors } = siteConfig.branding;
   const statsCardRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
@@ -126,28 +119,36 @@ export default function HeroV2({
   return (
     <section
       aria-label="Hero"
-      className="relative isolate overflow-hidden"
-      style={{ backgroundColor: colors.background.primary }}
+      className="relative isolate overflow-hidden min-h-screen"
     >
-      {/* Bottom-left accent gradient overlay */}
+      {/* Full-bleed doctor background image */}
       <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: `linear-gradient(to top right, ${hexToRgba(colors.accent.primary, 0.18)} 0%, ${hexToRgba(colors.accent.primary, 0)} 55%)`,
-        }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${backgroundImageUrl})` }}
         aria-hidden="true"
       />
 
-      <Container className="relative grid min-h-screen items-center gap-12 pb-16 pt-36 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)] lg:pb-20 lg:pt-44">
+      {/* Left-to-right dark gradient so content stays readable */}
+      <div
+        className="absolute inset-0 bg-linear-to-r from-slate-950/90 via-slate-900/70 to-slate-900/20"
+        aria-hidden="true"
+      />
 
+      {/* Bottom vignette for grounding */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-slate-950/60 to-transparent"
+        aria-hidden="true"
+      />
+
+      <Container className="relative z-10 flex min-h-screen flex-col justify-center pb-28 pt-36 lg:pb-32 lg:pt-44">
         {/* Left content */}
-        <div className="relative z-10 max-w-xl space-y-8 text-left">
+        <div className="max-w-xl space-y-8">
           <span
             className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium uppercase tracking-[0.2em]"
             style={{
-              borderColor: colors.border,
-              backgroundColor: colors.background.secondary,
-              color: colors.text.secondary,
+              borderColor: "rgba(255,255,255,0.2)",
+              backgroundColor: "rgba(255,255,255,0.08)",
+              color: "rgba(255,255,255,0.8)",
             }}
           >
             <svg
@@ -167,21 +168,20 @@ export default function HeroV2({
             {siteConfig.specialty} care
           </span>
 
-          <h1
-            className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl lg:text-6xl"
-            style={{ color: colors.text.primary }}
-          >
+          <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
             <span className="block">{titleLines[0] ?? ""}</span>
-            <span className="block">{titleLines[1] ?? ""}</span>
+            <span
+              className="block"
+              style={{ color: colors.accent.primary }}
+            >
+              {titleLines[1] ?? ""}
+            </span>
             {titleLines[2] && (
-              <span className="block">{titleLines[2] ?? ""}</span>
+              <span className="block text-white">{titleLines[2]}</span>
             )}
           </h1>
 
-          <p
-            className="max-w-lg text-base leading-relaxed sm:text-lg"
-            style={{ color: colors.text.secondary }}
-          >
+          <p className="max-w-lg text-base leading-relaxed text-white/75 sm:text-lg">
             {description}
           </p>
 
@@ -190,22 +190,13 @@ export default function HeroV2({
             <div className="flex items-center gap-2">
               <div className="flex gap-0.5" aria-label={`${rating} out of 5 stars`}>
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <StarIcon
-                    key={i}
-                    className="h-5 w-5 text-amber-400 sm:h-6 sm:w-6"
-                  />
+                  <StarIcon key={i} className="h-5 w-5 text-amber-400 sm:h-6 sm:w-6" />
                 ))}
               </div>
-              <span
-                className="text-sm font-medium sm:text-base"
-                style={{ color: colors.text.primary }}
-              >
+              <span className="text-sm font-medium text-white sm:text-base">
                 {rating}
                 {reviewCount != null && (
-                  <span
-                    className="ml-1 font-normal"
-                    style={{ color: colors.text.secondary }}
-                  >
+                  <span className="ml-1 font-normal text-white/60">
                     ({reviewCount}+ reviews)
                   </span>
                 )}
@@ -217,31 +208,28 @@ export default function HeroV2({
             <Button
               href={primaryCtaHref}
               variant="default"
-              className="h-13 min-w-[160px] rounded-full px-9 text-base shadow-md shadow-black/20 sm:text-lg"
+              className="h-13 min-w-[160px] rounded-full px-9 text-base shadow-md shadow-black/30 sm:text-lg"
             >
               {primaryCtaLabel}
             </Button>
             <Button
               href={secondaryCtaHref}
               variant="highlight"
-              className="h-13 min-w-[160px] rounded-full px-9 text-base shadow-md shadow-black/20 sm:text-lg"
+              className="h-13 min-w-[160px] rounded-full px-9 text-base shadow-md shadow-black/30 sm:text-lg"
             >
               {secondaryCtaLabel}
             </Button>
           </div>
 
           {/* Doctor office highlights */}
-          <div
-            className="flex flex-wrap items-center gap-6 gap-y-3 text-sm"
-            style={{ color: colors.text.secondary }}
-          >
+          <div className="flex flex-wrap items-center gap-6 gap-y-3 text-sm text-white/70">
             <span className="flex items-center gap-2">
               <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-rose-500/90 text-white">
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                 </svg>
               </span>
-              <span className="font-medium">24/7 Emergency</span>
+              <span className="font-medium text-white/90">24/7 Emergency</span>
             </span>
             <span className="flex items-center gap-2">
               <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-emerald-500/90 text-white">
@@ -249,7 +237,7 @@ export default function HeroV2({
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
               </span>
-              <span className="font-medium">Licensed & Insured</span>
+              <span className="font-medium text-white/90">Licensed & Insured</span>
             </span>
             <span className="flex items-center gap-2">
               <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-sky-500/90 text-white">
@@ -257,59 +245,42 @@ export default function HeroV2({
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
               </span>
-              <span className="font-medium">Patient-Centered Care</span>
+              <span className="font-medium text-white/90">Patient-Centered Care</span>
             </span>
           </div>
         </div>
 
-        {/* Right visual column */}
-        <div className="relative flex h-[380px] w-full items-stretch sm:h-[440px] md:h-[520px] lg:h-[560px]">
-          {/* Main doctor image */}
-          <div className="relative h-full w-full overflow-hidden rounded-3xl bg-slate-100 shadow-2xl ring-1 ring-black/5 lg:ml-auto lg:max-w-md">
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url(${backgroundImageUrl})` }}
-              aria-hidden="true"
-            />
-            <div
-              className="absolute inset-0 bg-linear-to-t from-slate-900/40 via-slate-900/0 to-transparent"
-              aria-hidden="true"
-            />
+        {/* Stats card — pinned to bottom of section */}
+        <div
+          ref={statsCardRef}
+          className="mt-16 w-full max-w-sm sm:max-w-md lg:absolute lg:bottom-20 lg:right-10 lg:mt-0 lg:max-w-[460px]"
+        >
+          <div className="grid grid-cols-2 gap-3">
+            {stats.slice(0, 4).map((stat, i) => {
+              const { suffix } = statTargets[i] ?? { suffix: "" };
+              const value = showAnimated
+                ? `${displayValues[i] ?? 0}${suffix}`
+                : stat.value;
+              return (
+                <div
+                  key={stat.label}
+                  className="space-y-2 rounded-2xl bg-white px-6 py-5"
+                >
+                  <div
+                    className="text-4xl font-bold tabular-nums sm:text-5xl"
+                    style={{ color: colors.accent.primary }}
+                  >
+                    {value}
+                  </div>
+                  <div className="text-sm font-medium" style={{ color: colors.text.primary }}>
+                    {stat.label}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </Container>
-
-      {/* Stats card — uses its own Container so right edge matches the navbar exactly */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-8 z-20 lg:bottom-12">
-        <Container className="flex justify-end">
-          <div
-            ref={statsCardRef}
-            className="pointer-events-auto w-[300px]"
-          >
-            <div className="grid grid-cols-2 gap-3">
-              {stats.slice(0, 4).map((stat, i) => {
-                const { suffix } = statTargets[i] ?? { suffix: "" };
-                const value = showAnimated
-                  ? `${displayValues[i] ?? 0}${suffix}`
-                  : stat.value;
-                return (
-                  <div
-                    key={stat.label}
-                    className="space-y-1 rounded-xl bg-slate-50 p-3"
-                  >
-                    <div className="text-lg font-semibold sm:text-3xl tabular-nums" style={{ color: colors.accent.primary }}>
-                      {value}
-                    </div>
-                    <div className="text-xs font-medium uppercase tracking-wide" style={{ color: colors.text.primary }}>
-                      {stat.label}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Container>
-      </div>
     </section>
   );
 }
