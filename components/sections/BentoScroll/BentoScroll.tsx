@@ -124,18 +124,16 @@ export default function StickyBentoScrollSection({
 
           {/* ── LEFT — sticky bento panel ─────────────────────────────────── */}
           <div className="mb-16 lg:col-span-6 lg:mb-0">
-            <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-hidden">
+            <div className="lg:sticky lg:top-24 lg:flex lg:h-[calc(100vh-6rem)] lg:flex-col lg:pt-8">
 
               {/* Bento: 5-col grid — accent card (2) | photo (3) / wide photo (5) */}
-              <div className="grid grid-cols-5 gap-3 sm:gap-4">
+              {/* lg:grid-rows-[2fr_3fr] fills the sticky height proportionally */}
+              <div className="grid grid-cols-5 gap-3 sm:gap-4 lg:min-h-0 lg:flex-1 lg:grid-rows-[2fr_3fr]">
 
                 {/* Accent card — top left, shows active phrase */}
                 <div
-                  className="col-span-2 flex flex-col justify-end rounded-2xl p-6"
-                  style={{
-                    backgroundColor: colors.accent.primary,
-                    minHeight: "12rem",
-                  }}
+                  className="col-span-2 flex min-h-44 flex-col justify-end rounded-2xl p-6 lg:min-h-0"
+                  style={{ backgroundColor: colors.accent.primary }}
                   aria-hidden="true"
                 >
                   <p
@@ -151,10 +149,7 @@ export default function StickyBentoScrollSection({
                 </div>
 
                 {/* Photo card — top right */}
-                <div
-                  className="relative col-span-3 overflow-hidden rounded-2xl"
-                  style={{ minHeight: "12rem" }}
-                >
+                <div className="relative col-span-3 min-h-44 overflow-hidden rounded-2xl lg:min-h-0">
                   <Image
                     src={topPhotoUrl}
                     alt="Dermatologist providing attentive patient care"
@@ -166,10 +161,7 @@ export default function StickyBentoScrollSection({
                 </div>
 
                 {/* Wide photo — bottom, full bento width */}
-                <div
-                  className="relative col-span-5 overflow-hidden rounded-2xl"
-                  style={{ height: "17rem" }}
-                >
+                <div className="relative col-span-5 min-h-60 overflow-hidden rounded-2xl lg:min-h-0">
                   <Image
                     src={bottomPhotoUrl}
                     alt="Advanced dermatology technology and equipment"
@@ -182,7 +174,7 @@ export default function StickyBentoScrollSection({
 
               {/* Scroll progress pill indicator */}
               <div
-                className="mt-5 flex items-center gap-2"
+                className="mt-5 flex shrink-0 items-center gap-2"
                 aria-hidden="true"
               >
                 {scrollBlocks.map((_, i) => (
