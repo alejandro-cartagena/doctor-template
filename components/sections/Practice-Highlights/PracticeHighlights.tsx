@@ -56,6 +56,18 @@ export default function PracticeHighlights({
       style={{ backgroundColor: colors.background.primary }}
       className="py-20 sm:py-24 lg:py-28"
     >
+      {/* Dynamic glow hover effect — uses config accent color */}
+      <style>{`
+        .ph-card {
+          transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ph-card:hover {
+          background-color: ${colors.background.secondary};
+          box-shadow:
+            inset 0 0 40px ${colors.accent.primary}18,
+            0 0 30px ${colors.accent.primary}28;
+        }
+      `}</style>
       <Container>
         {/* Header */}
         <div className="mx-auto mb-14 max-w-2xl text-center">
@@ -98,7 +110,7 @@ export default function PracticeHighlights({
             return (
               <li
                 key={item.title}
-                className={`flex flex-col p-10 ${borderClass}`}
+                className={`ph-card flex flex-col p-10 ${borderClass}`}
                 style={{ borderColor: colors.accent.primary }}
               >
                 {/* Fixed-height icon slot keeps text baseline aligned across all cards */}

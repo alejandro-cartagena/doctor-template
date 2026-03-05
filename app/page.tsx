@@ -6,6 +6,7 @@ import Intro from "@/components/sections/Introduction/Intro";
 import Services from "@/components/sections/Services/Services";
 import WhyUs from "@/components/sections/WhyUs/WhyUs";
 import PracticeHighlights from "@/components/sections/Practice-Highlights/PracticeHighlights";
+import StickyBentoScrollSection from "@/components/sections/BentoScroll/BentoScroll";
 
 // HERO V2
 import HeroV2 from "@/components/sections/Hero/Herov2";
@@ -21,6 +22,7 @@ export default function Home() {
         {/* <HeroV2 /> */}
         <HeroV3 />
         <PracticeHighlights />
+        <StickyBentoScrollSection />
         <Intro />
         <Services />
         <WhyUs />
