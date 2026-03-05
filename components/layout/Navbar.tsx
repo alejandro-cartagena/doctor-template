@@ -82,19 +82,15 @@ export default function Navbar() {
         borderColor: colors.border,
       }
     : undefined;
-  const textStyle = showSolidNav
-    ? { color: colors.text.primary }
-    : { color: colors.text.inverse };
+  const textStyle = { color: colors.text.primary };
   const burgerClass = showSolidNav
     ? "border-current"
     : "border-white/30 bg-white/10 text-white hover:bg-white/20";
-  const burgerStyle = showSolidNav
-    ? {
-        backgroundColor: colors.background.secondary,
-        borderColor: colors.border,
-        color: colors.text.primary,
-      }
-    : undefined;
+  const burgerStyle = {
+    backgroundColor: colors.background.secondary,
+    borderColor: colors.border,
+    color: colors.text.primary,
+  };
 
   return (
     <>

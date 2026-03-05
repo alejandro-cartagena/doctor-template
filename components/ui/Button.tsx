@@ -14,7 +14,13 @@ interface ButtonProps {
 }
 
 const baseClass =
-  "inline-flex items-center justify-center rounded-md border font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent";
+  "inline-flex items-center justify-center rounded-md border font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent";
+
+const variantHoverClass: Record<ButtonVariant, string> = {
+  default: "hover:opacity-90",
+  highlight: "hover:!bg-slate-100 hover:!border-slate-100",
+  highlightoutline: "hover:opacity-90",
+};
 
 export default function Button({
   children,
@@ -43,7 +49,7 @@ export default function Button({
     },
   };
   const style = variantStyles[variant];
-  const combined = `${baseClass} ${className}`;
+  const combined = `${baseClass} ${variantHoverClass[variant]} ${className}`;
 
   if (href) {
     return (

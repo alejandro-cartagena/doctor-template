@@ -117,7 +117,7 @@ export const siteConfig = {
     colors: {
       background: {
         primary: "#FFFFFF",
-        secondary: "#F4F7FA", // soft clinical blue-gray
+        secondary: "#F3FBFC", // very light teal tint (for subtle section bg)
       },
       text: {
         primary: "#0F172A",   // slate-900
@@ -125,10 +125,10 @@ export const siteConfig = {
         inverse: "#FFFFFF",
       },
       accent: {
-        primary: "#1D4ED8",   // professional medical blue
-        hover: "#1E40AF",
+        primary: "#2AA6B6",   // teal similar to screenshot buttons/icons
+        hover: "#238D9B",     // darker teal for hover
       },
-      border: "#E2E8F0", // light slate border
+      border: "#DCECF0", // slightly teal-leaning border
     },
   },
 

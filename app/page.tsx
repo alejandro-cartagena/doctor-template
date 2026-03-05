@@ -5,6 +5,7 @@ import Hero from "@/components/sections/Hero/Hero";
 import Intro from "@/components/sections/Introduction/Intro";
 import Services from "@/components/sections/Services/Services";
 import WhyUs from "@/components/sections/WhyUs/WhyUs";
+import PracticeHighlights from "@/components/sections/Practice-Highlights/PracticeHighlights";
 
 // HERO V2
 import HeroV2 from "@/components/sections/Hero/Herov2";
@@ -17,6 +18,7 @@ export default function Home() {
       <main>
         {/* <Hero /> */}
         <HeroV2 />
+        <PracticeHighlights />
         <Intro />
         <Services />
         <WhyUs />

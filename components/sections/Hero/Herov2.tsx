@@ -59,6 +59,13 @@ const defaultBackgroundImage =
 const DURATION_MS = 1200;
 const EASE_OUT = (t: number) => 1 - (1 - t) * (1 - t);
 
+function hexToRgba(hex: string, alpha: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 function parseStatValue(value: string): { num: number; suffix: string } {
   const match = value.match(/^(\d+)(\+?)$/);
   if (!match) return { num: 0, suffix: "" };
@@ -119,23 +126,32 @@ export default function HeroV2({
   return (
     <section
       aria-label="Hero"
-      className="relative isolate overflow-hidden bg-slate-900 text-white"
+      className="relative isolate overflow-hidden"
+      style={{ backgroundColor: colors.background.primary }}
     >
-      {/* Left gradient overlay to echo screenshot look */}
+      {/* Bottom-left accent gradient overlay */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-full bg-gradient-to-r from-slate-900 via-slate-900/75 to-slate-900/0 lg:w-1/2"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `linear-gradient(to top right, ${hexToRgba(colors.accent.primary, 0.18)} 0%, ${hexToRgba(colors.accent.primary, 0)} 55%)`,
+        }}
         aria-hidden="true"
       />
 
-      <Container className="relative grid min-h-screen items-center gap-12 py-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)] lg:py-20">
-        {/* Copy so gradient sits under content but above background */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-full bg-slate-900/40 lg:w-1/2" />
+      <Container className="relative grid min-h-screen items-center gap-12 pb-16 pt-36 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.1fr)] lg:pb-20 lg:pt-44">
 
         {/* Left content */}
-        <div className="relative z-10 max-w-xl space-y-6 text-left">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-800/60 px-4 py-2 text-sm font-medium uppercase tracking-[0.2em] text-white backdrop-blur-md">
+        <div className="relative z-10 max-w-xl space-y-8 text-left">
+          <span
+            className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium uppercase tracking-[0.2em]"
+            style={{
+              borderColor: colors.border,
+              backgroundColor: colors.background.secondary,
+              color: colors.text.secondary,
+            }}
+          >
             <svg
-              className="h-4 w-4 shrink-0 text-sky-300"
+              className="h-4 w-4 shrink-0"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="none"
@@ -144,13 +160,17 @@ export default function HeroV2({
               strokeLinecap="round"
               strokeLinejoin="round"
               aria-hidden="true"
+              style={{ color: colors.accent.primary }}
             >
               <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
             </svg>
             {siteConfig.specialty} care
           </span>
 
-          <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1
+            className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl lg:text-6xl"
+            style={{ color: colors.text.primary }}
+          >
             <span className="block">{titleLines[0] ?? ""}</span>
             <span className="block">{titleLines[1] ?? ""}</span>
             {titleLines[2] && (
@@ -159,8 +179,8 @@ export default function HeroV2({
           </h1>
 
           <p
-            className="max-w-lg text-base leading-relaxed text-slate-100/90 sm:text-lg"
-            style={{ color: colors.text.inverse }}
+            className="max-w-lg text-base leading-relaxed sm:text-lg"
+            style={{ color: colors.text.secondary }}
           >
             {description}
           </p>
@@ -176,10 +196,16 @@ export default function HeroV2({
                   />
                 ))}
               </div>
-              <span className="text-sm font-medium text-white sm:text-base">
+              <span
+                className="text-sm font-medium sm:text-base"
+                style={{ color: colors.text.primary }}
+              >
                 {rating}
                 {reviewCount != null && (
-                  <span className="ml-1 font-normal text-slate-300">
+                  <span
+                    className="ml-1 font-normal"
+                    style={{ color: colors.text.secondary }}
+                  >
                     ({reviewCount}+ reviews)
                   </span>
                 )}
@@ -191,23 +217,26 @@ export default function HeroV2({
             <Button
               href={primaryCtaHref}
               variant="default"
-              className="h-11 min-w-[140px] rounded-full px-7 text-sm sm:text-base"
+              className="h-13 min-w-[160px] rounded-full px-9 text-base shadow-md shadow-black/20 sm:text-lg"
             >
               {primaryCtaLabel}
             </Button>
             <Button
               href={secondaryCtaHref}
               variant="highlight"
-              className="h-11 min-w-[140px] rounded-full px-7 text-sm sm:text-base"
+              className="h-13 min-w-[160px] rounded-full px-9 text-base shadow-md shadow-black/20 sm:text-lg"
             >
               {secondaryCtaLabel}
             </Button>
           </div>
 
           {/* Doctor office highlights */}
-          <div className="flex flex-wrap items-center gap-6 gap-y-3 text-sm text-slate-200">
+          <div
+            className="flex flex-wrap items-center gap-6 gap-y-3 text-sm"
+            style={{ color: colors.text.secondary }}
+          >
             <span className="flex items-center gap-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-rose-500/90 text-white">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-rose-500/90 text-white">
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                 </svg>
@@ -215,7 +244,7 @@ export default function HeroV2({
               <span className="font-medium">24/7 Emergency</span>
             </span>
             <span className="flex items-center gap-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-emerald-500/90 text-white">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-emerald-500/90 text-white">
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
@@ -223,7 +252,7 @@ export default function HeroV2({
               <span className="font-medium">Licensed & Insured</span>
             </span>
             <span className="flex items-center gap-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-sky-500/90 text-white">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-sky-500/90 text-white">
                 <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
@@ -234,16 +263,16 @@ export default function HeroV2({
         </div>
 
         {/* Right visual column */}
-        <div className="relative flex h-[380px] w-full items-stretch justify-end sm:h-[440px] md:h-[520px] lg:h-[560px]">
+        <div className="relative flex h-[380px] w-full items-stretch sm:h-[440px] md:h-[520px] lg:h-[560px]">
           {/* Main doctor image */}
-          <div className="relative ml-auto h-full w-full max-w-md overflow-hidden rounded-3xl bg-slate-800 shadow-2xl ring-1 ring-black/5">
+          <div className="relative h-full w-full overflow-hidden rounded-3xl bg-slate-100 shadow-2xl ring-1 ring-black/5 lg:ml-auto lg:max-w-md">
             <div
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${backgroundImageUrl})` }}
               aria-hidden="true"
             />
             <div
-              className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-slate-900/0 to-transparent"
+              className="absolute inset-0 bg-linear-to-t from-slate-900/40 via-slate-900/0 to-transparent"
               aria-hidden="true"
             />
           </div>
@@ -251,7 +280,7 @@ export default function HeroV2({
           {/* Stats card cluster */}
           <div
             ref={statsCardRef}
-            className="absolute -bottom-8 right-4 z-20 w-[260px] rounded-3xl bg-white/95 p-4 text-slate-900 shadow-2xl backdrop-blur sm:right-8 md:w-[280px]"
+            className="absolute -bottom-8 right-4 z-20 w-[300px] rounded-3xl bg-white/95 p-4 text-slate-900 shadow-2xl backdrop-blur sm:right-8 md:w-[300px]"
           >
             <div className="grid grid-cols-2 gap-3">
               {stats.slice(0, 4).map((stat, i) => {
@@ -264,10 +293,10 @@ export default function HeroV2({
                     key={stat.label}
                     className="space-y-1 rounded-xl bg-slate-50 p-3"
                   >
-                    <div className="text-lg font-semibold text-slate-900 sm:text-xl tabular-nums">
+                    <div className="text-lg font-semibold sm:text-3xl tabular-nums" style={{ color: colors.accent.primary }}>
                       {value}
                     </div>
-                    <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                    <div className="text-xs font-medium uppercase tracking-wide" style={{ color: colors.text.primary }}>
                       {stat.label}
                     </div>
                   </div>
