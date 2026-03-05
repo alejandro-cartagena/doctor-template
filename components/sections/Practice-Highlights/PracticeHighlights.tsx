@@ -76,37 +76,51 @@ export default function PracticeHighlights({
           </h2>
         </div>
 
-        {/* Grid */}
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {highlights.map((item) => {
+        {/* Connected card strip */}
+        {/* Border classes per index: mobile=1-col, sm=2-col, lg=4-col */}
+        <ul
+          className="grid grid-cols-1 overflow-hidden rounded-2xl border-2 shadow-sm sm:grid-cols-2 lg:grid-cols-4"
+          style={{
+            borderColor: colors.accent.primary,
+            backgroundColor: colors.background.primary,
+          }}
+        >
+          {highlights.map((item, index) => {
             const Icon = item.icon;
+            // Divider borders per breakpoint so the outer border is never doubled
+            const borderClass = [
+              "border-b-2 sm:border-r-2 lg:border-b-0",
+              "border-b-2 lg:border-b-0 lg:border-r-2",
+              "border-b-2 sm:border-r-2 sm:border-b-0",
+              "",
+            ][index] ?? "border-b-2";
+
             return (
               <li
                 key={item.title}
-                className="flex flex-col rounded-2xl border p-8 transition-shadow duration-200 shadow-sm hover:shadow-md"
-                style={{
-                  borderColor: colors.border,
-                  backgroundColor: colors.background.primary,
-                }}
+                className={`flex flex-col p-10 ${borderClass}`}
+                style={{ borderColor: colors.accent.primary }}
               >
-                {/* Icon area — generous top space so it sits high in the card */}
-                <div className="mb-10" aria-hidden="true">
+                {/* Fixed-height icon slot keeps text baseline aligned across all cards */}
+                <div
+                  className="mb-8 flex h-24 items-start"
+                  aria-hidden="true"
+                >
                   <Icon
-                    className="h-12 w-12 stroke-1"
+                    className="h-20 w-20 stroke-[0.75]"
                     style={{ color: colors.accent.primary }}
                   />
                 </div>
 
-                {/* Text — pinned to the bottom of the card naturally */}
-                <div className="mt-auto space-y-2">
+                <div className="space-y-3">
                   <h3
-                    className="text-base font-semibold"
+                    className="text-2xl font-semibold"
                     style={{ color: colors.text.primary }}
                   >
                     {item.title}
                   </h3>
                   <p
-                    className="text-sm leading-relaxed"
+                    className="text-lg leading-relaxed"
                     style={{ color: colors.text.secondary }}
                   >
                     {item.description}
