@@ -230,6 +230,9 @@ export default function StickyBentoScrollSection({
             <div aria-live="polite" aria-atomic="false">
               {scrollBlocks.map((block, i) => {
                 const isActive = activeIndex === i;
+                // Blocks already scrolled past or currently active stay fully visible;
+                // only upcoming blocks are dimmed.
+                const isVisible = i <= activeIndex;
                 // Use a stable callback that closes over blockRefs
                 const refCb = stableRefCallbacks[i](blockRefs);
 
@@ -261,7 +264,7 @@ export default function StickyBentoScrollSection({
                         className="h-1.5 w-1.5 rounded-full"
                         style={{
                           backgroundColor: colors.accent.primary,
-                          opacity: isActive ? 1 : 0.3,
+                          opacity: isVisible ? 1 : 0.3,
                           transition: "opacity 0.35s ease",
                         }}
                         aria-hidden="true"
@@ -273,7 +276,7 @@ export default function StickyBentoScrollSection({
                       className="mb-3 text-xl font-bold leading-snug tracking-tight sm:text-2xl"
                       style={{
                         color: colors.text.primary,
-                        opacity: isActive ? 1 : 0.4,
+                        opacity: isVisible ? 1 : 0.4,
                         transition: "opacity 0.35s ease",
                       }}
                     >
@@ -284,7 +287,7 @@ export default function StickyBentoScrollSection({
                       className="text-base leading-relaxed"
                       style={{
                         color: colors.text.secondary,
-                        opacity: isActive ? 1 : 0.4,
+                        opacity: isVisible ? 1 : 0.4,
                         transition: "opacity 0.35s ease",
                       }}
                     >
