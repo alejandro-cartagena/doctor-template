@@ -65,7 +65,7 @@ export default function Cta() {
 
           {/* CTA content — truly centered across the full site width */}
           <div className="relative z-10 flex w-full flex-col items-center gap-8 py-14 text-center">
-            <h2 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            <h2 className="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.35)" }}>
               Begin your path
               <br /> to better health today
             </h2>

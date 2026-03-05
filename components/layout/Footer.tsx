@@ -93,7 +93,7 @@ export default function Footer() {
       aria-label="Site footer"
     >
       <Container className="py-12 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
+        <div className="grid items-start gap-10 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
           {/* Left: Logo, address, contact, social */}
           <div className="flex flex-col gap-6">
             <Link
@@ -135,7 +135,7 @@ export default function Footer() {
                 <li>
                   <a
                     href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
-                    className="underline decoration-current underline-offset-2 hover:opacity-80"
+                    className="hover:opacity-80"
                   >
                     {siteConfig.phone}
                   </a>
@@ -143,7 +143,7 @@ export default function Footer() {
                 <li>
                   <a
                     href={`mailto:${siteConfig.email}`}
-                    className="underline decoration-current underline-offset-2 hover:opacity-80"
+                    className="hover:opacity-80"
                   >
                     {siteConfig.email}
                   </a>
@@ -195,7 +195,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm underline decoration-current underline-offset-2 hover:opacity-80"
+                    className="text-sm hover:opacity-80"
                     style={{ color: textColor }}
                   >
                     {item.label}
@@ -205,7 +205,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Right: Secondary nav + copyright */}
+          {/* Right: Secondary nav */}
           <div className="flex flex-col gap-6">
             <nav aria-label="Footer secondary">
               <ul className="space-y-3">
@@ -213,7 +213,7 @@ export default function Footer() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-sm underline decoration-current underline-offset-2 hover:opacity-80"
+                      className="text-sm hover:opacity-80"
                       style={{ color: textColor }}
                     >
                       {item.label}
@@ -222,12 +222,6 @@ export default function Footer() {
                 ))}
               </ul>
             </nav>
-            <p
-              className="text-xs"
-              style={{ color: siteConfig.branding.colors.text.secondary }}
-            >
-              © {currentYear} {siteConfig.businessName}. All rights reserved.
-            </p>
           </div>
         </div>
       </Container>
@@ -238,12 +232,17 @@ export default function Footer() {
         style={{ borderColor }}
       >
         <Container className="flex flex-col items-center justify-between gap-3 text-sm sm:flex-row">
+          <p
+            style={{ color: siteConfig.branding.colors.text.secondary }}
+          >
+            © {currentYear} {siteConfig.businessName}. All rights reserved.
+          </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
             {legalNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="underline decoration-current underline-offset-2 hover:opacity-80"
+                className="hover:opacity-80"
                 style={{ color: textColor }}
               >
                 {item.label}
