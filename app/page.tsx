@@ -11,6 +11,7 @@ import Testimonials from "@/components/sections/Testimonials/Testimonials";
 import Marquee from "@/components/sections/Marquee/Marquee";
 import Cta from "@/components/sections/CTA/Cta";
 import OurTeam from "@/components/sections/OurTeam/OurTeam";
+import Location from "@/components/sections/Location/Location";
 
 // HERO V2
 import HeroV2 from "@/components/sections/Hero/Herov2";
@@ -37,6 +38,7 @@ export default function Home() {
         {/* <Intro /> */}
         {/* <Services /> */}
         {/* <WhyUs /> */}
+        <Location />
         <Cta />
       </main>
       <Footer />
