@@ -13,6 +13,7 @@ import Cta from "@/components/sections/CTA/Cta";
 import OurTeam from "@/components/sections/OurTeam/OurTeam";
 import Location from "@/components/sections/Location/Location";
 import MainDoctor from "@/components/sections/MainDoctor/MainDoctor";
+import Contact from "@/components/sections/Contact/Contact";
 
 // HERO V2
 import HeroV2 from "@/components/sections/Hero/Herov2";
@@ -41,6 +42,7 @@ export default function Home() {
         {/* <Services /> */}
         {/* <WhyUs /> */}
         <Location />
+        <Contact />
         <Cta />
       </main>
       <Footer />

@@ -88,9 +88,58 @@ export default function MainDoctor({
             <div className="mt-8" aria-hidden="true">
               <SignatureSvg />
             </div>
+
+            {/* ── Mobile / tablet doctor card ── */}
+            <div
+              className="mt-10 overflow-hidden rounded-2xl lg:hidden"
+              style={{
+                backgroundColor: "#fff",
+                border: `1px solid ${c.border}`,
+                boxShadow: "0 8px 32px 0 rgba(42,166,182,0.10), 0 2px 8px 0 rgba(0,0,0,0.06)",
+              }}
+            >
+              {/* Card header strip */}
+              <div
+                className="px-5 py-4"
+                style={{ backgroundColor: c.background.secondary }}
+              >
+                <p
+                  className="text-xs font-semibold uppercase tracking-widest"
+                  style={{ color: c.accent.primary }}
+                >
+                  {doctor?.role ?? "Lead Physician"}
+                </p>
+                <p
+                  className="mt-0.5 text-base font-bold"
+                  style={{ color: c.text.primary }}
+                >
+                  {resolvedEyebrow}
+                  {doctor?.credentials && (
+                    <span
+                      className="ml-2 text-xs font-medium"
+                      style={{ color: c.text.secondary }}
+                    >
+                      {doctor.credentials}
+                    </span>
+                  )}
+                </p>
+              </div>
+
+              {/* Doctor photo */}
+              <div className="relative w-full" style={{ height: 320 }}>
+                <Image
+                  src={imageUrl}
+                  alt={resolvedAlt}
+                  fill
+                  className="object-contain object-bottom"
+                  sizes="(max-width: 1024px) 100vw, 0px"
+                  priority
+                />
+              </div>
+            </div>
           </div>
 
-          {/* ── Right: doctor image ── */}
+          {/* ── Right: doctor image (desktop only) ── */}
           <div className="hidden self-end lg:block">
             <div className="relative" style={{ width: 440, height: 500 }}>
               <Image
