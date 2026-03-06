@@ -106,14 +106,14 @@ export default function ServicesV2({
           {/* Left: label + heading */}
           <div className="shrink-0">
             <p
-              className="text-xs font-semibold uppercase tracking-widest mb-2"
+              className="text-center sm:text-left text-xs font-semibold uppercase tracking-widest mb-2"
               style={{ color: c.accent.primary }}
             >
               {sectionLabel}
             </p>
             <h2
               id="services-v2-heading"
-              className="sm:text-4xl lg:text-5xl font-bold leading-tight"
+              className="text-center sm:text-left text-4xl lg:text-5xl font-bold leading-tight"
               style={{ color: c.text.primary }}
             >
               <span style={{ color: c.accent.primary }}>{headingAccent}</span>{" "}
@@ -124,7 +124,7 @@ export default function ServicesV2({
           {/* Right: CTA */}
           <Link
             href={ctaHref}
-            className="inline-flex items-center gap-2 px-5 py-2.5 text-base font-semibold rounded transition-colors whitespace-nowrap shrink-0 self-start lg:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-2.5 text-base font-semibold rounded transition-colors whitespace-nowrap shrink-0 self-center lg:self-auto"
             style={{ backgroundColor: c.accent.primary, color: c.text.inverse }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.backgroundColor = c.accent.hover;
