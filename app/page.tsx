@@ -15,6 +15,9 @@ import Cta from "@/components/sections/CTA/Cta";
 import HeroV2 from "@/components/sections/Hero/Herov2";
 import HeroV3 from "@/components/sections/Hero/HeroV3";
 
+// SERVICES V2
+import ServicesV2 from "@/components/sections/Services/ServicesV2";
+
 export default function Home() {
   return (
     <>
@@ -25,6 +28,7 @@ export default function Home() {
         {/* <HeroV2 /> */}
         <HeroV3 />
         <PracticeHighlights />
+        <ServicesV2 />
         <StickyBentoScrollSection />
         {/* <Testimonials /> */}
         <Marquee />
