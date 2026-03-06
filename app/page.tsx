@@ -14,6 +14,8 @@ import OurTeam from "@/components/sections/OurTeam/OurTeam";
 import Location from "@/components/sections/Location/Location";
 import MainDoctor from "@/components/sections/MainDoctor/MainDoctor";
 import Contact from "@/components/sections/Contact/Contact";
+import Faq from "@/components/sections/Faq/Faq";
+// import Insurance from "@/components/sections/Insurance/Insurance";
 
 // HERO V2
 import HeroV2 from "@/components/sections/Hero/Herov2";
@@ -42,9 +44,10 @@ export default function Home() {
         {/* <Intro /> */}
         {/* <Services /> */}
         {/* <WhyUs /> */}
+        {/* <Insurance /> */}
         <Location />
         <Contact />
-        
+        <Faq />
       </main>
       <Footer />
     </>
