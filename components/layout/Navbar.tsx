@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { siteConfig } from "@/config/site";
 import Button from "@/components/ui/Button";
@@ -12,10 +13,17 @@ const SCROLL_THRESHOLD = 24;
 
 const bookHref = siteConfig.bookingUrl || "/#contact";
 
+const servicesDropdown = [
+  { label: "Service 1", href: "/#services" },
+  { label: "Service 2", href: "/#services" },
+  { label: "Service 3", href: "/#services" },
+];
+
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (pathname === "/") {
@@ -132,18 +140,60 @@ export default function Navbar() {
           </Link>
 
           <ul className="hidden items-center gap-8 md:flex">
-            {siteConfig.navigation.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  style={textStyle}
-                  className={`text-sm font-semibold uppercase tracking-wider transition-colors ${showSolidNav ? "hover:[color:var(--accent)]" : "hover:opacity-80"}`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {siteConfig.navigation.map((item) =>
+              item.label === "Services" ? (
+                <li key={item.href} className="group relative">
+                  {/* Trigger */}
+                  <button
+                    style={textStyle}
+                    className={`flex cursor-pointer items-center gap-1 text-sm font-semibold uppercase tracking-wider transition-colors ${showSolidNav ? "hover:[color:var(--accent)]" : "hover:opacity-80"}`}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      size={13}
+                      strokeWidth={2.5}
+                      className="transition-transform duration-200 group-hover:rotate-180"
+                    />
+                  </button>
+
+                  {/* Dropdown panel */}
+                  <div className="pointer-events-none absolute left-1/2 top-full -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+                    <div
+                      className="min-w-[180px] overflow-hidden rounded-xl border shadow-lg"
+                      style={{
+                        background: colors.background.primary,
+                        borderColor: colors.border,
+                      }}
+                    >
+                      {servicesDropdown.map((s) => (
+                        <Link
+                          key={s.label}
+                          href={s.href}
+                          onClick={(e) => handleNavClick(e, s.href)}
+                          className="block px-4 py-2.5 text-sm transition-colors hover:opacity-70"
+                          style={{
+                            color: colors.text.primary,
+                          }}
+                        >
+                          {s.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </li>
+              ) : (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    style={textStyle}
+                    className={`text-sm font-semibold uppercase tracking-wider transition-colors ${showSolidNav ? "hover:[color:var(--accent)]" : "hover:opacity-80"}`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              )
+            )}
             <Button
               href={bookHref}
               variant="default"
@@ -243,20 +293,57 @@ export default function Navbar() {
 
         <nav className="px-4 py-6">
           <ul className="space-y-2">
-            {siteConfig.navigation.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="block rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors hover:opacity-90"
-                  style={{
-                    color: siteConfig.branding.colors.text.primary,
-                  }}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {siteConfig.navigation.map((item) =>
+              item.label === "Services" ? (
+                <li key={item.href}>
+                  {/* Accordion trigger */}
+                  <button
+                    type="button"
+                    onClick={() => setMobileServicesOpen((v) => !v)}
+                    className="flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors hover:opacity-90"
+                    style={{ color: siteConfig.branding.colors.text.primary }}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      size={15}
+                      strokeWidth={2}
+                      className={`transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
+                      style={{ color: siteConfig.branding.colors.accent.primary }}
+                    />
+                  </button>
+
+                  {/* Accordion body */}
+                  <ul
+                    className={`mt-1 ml-3 overflow-hidden border-l pl-3 transition-all duration-200 ${mobileServicesOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}
+                    style={{ borderColor: siteConfig.branding.colors.border }}
+                  >
+                    {servicesDropdown.map((s) => (
+                      <li key={s.label}>
+                        <Link
+                          href={s.href}
+                          onClick={(e) => handleNavClick(e, s.href)}
+                          className="block rounded-md px-3 py-2 text-sm transition-colors hover:opacity-70"
+                          style={{ color: siteConfig.branding.colors.text.secondary }}
+                        >
+                          {s.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="block rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors hover:opacity-90"
+                    style={{ color: siteConfig.branding.colors.text.primary }}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              )
+            )}
             <li className="pt-2">
               <Button href={bookHref} variant="default" className="h-10 w-full">
                 Book
