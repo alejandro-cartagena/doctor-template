@@ -121,14 +121,6 @@ export default function ServicesV2({
             </h2>
           </div>
 
-          {/* Center: subheading */}
-          <p
-            className="max-w-xs text-base leading-relaxed"
-            style={{ color: c.text.secondary }}
-          >
-            {subheading}
-          </p>
-
           {/* Right: CTA */}
           <Link
             href={ctaHref}
