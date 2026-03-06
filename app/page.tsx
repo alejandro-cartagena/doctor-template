@@ -12,6 +12,7 @@ import Marquee from "@/components/sections/Marquee/Marquee";
 import Cta from "@/components/sections/CTA/Cta";
 import OurTeam from "@/components/sections/OurTeam/OurTeam";
 import Location from "@/components/sections/Location/Location";
+import MainDoctor from "@/components/sections/MainDoctor/MainDoctor";
 
 // HERO V2
 import HeroV2 from "@/components/sections/Hero/Herov2";
@@ -33,6 +34,7 @@ export default function Home() {
         <ServicesV2 />
         <StickyBentoScrollSection />
         {/* <Testimonials /> */}
+        <MainDoctor />
         <OurTeam />
         <Marquee />
         {/* <Intro /> */}
