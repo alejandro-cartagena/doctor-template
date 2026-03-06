@@ -14,11 +14,8 @@ export default function Cta() {
 
   return (
     <section
-      className="relative w-full pb-16"
-      style={{
-        backgroundColor: colors.background.primary,
-        paddingTop: `${OVERFLOW + 24}px`,
-      }}
+      className="relative w-full"
+      style={{ backgroundColor: colors.background.primary }}
     >
       <div className="w-full">
         <div
@@ -51,7 +48,7 @@ export default function Cta() {
           {/* Doctor image — pinned to bottom, head overflows above card */}
           <div
             className="pointer-events-none absolute bottom-0 left-6 hidden select-none md:block lg:left-10"
-            style={{ height: `${IMG_H}px`, width: 360 }}
+            style={{ height: `${IMG_H}px`, width: 360, marginTop: `-${OVERFLOW}px` }}
           >
             <Image
               src="/images/doctor-bg-remove.png"

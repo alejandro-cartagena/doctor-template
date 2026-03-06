@@ -37,13 +37,14 @@ export default function Home() {
         {/* <Testimonials /> */}
         <MainDoctor />
         <OurTeam />
+        <Cta />
         <Marquee />
         {/* <Intro /> */}
         {/* <Services /> */}
         {/* <WhyUs /> */}
         <Location />
         <Contact />
-        <Cta />
+        
       </main>
       <Footer />
     </>

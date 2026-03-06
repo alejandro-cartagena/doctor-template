@@ -36,6 +36,12 @@ const socialLinks = [
   { key: "youtube", href: (siteConfig.social as { youtube?: string }).youtube ?? "", label: "YouTube", icon: YouTubeIcon },
 ];
 
+const hoursRows = [
+  { days: "Mon – Thu", time: siteConfig.hours.monday },
+  { days: "Friday",    time: siteConfig.hours.friday },
+  { days: "Sat – Sun", time: siteConfig.hours.saturday },
+];
+
 const currentYear = new Date().getFullYear();
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -79,27 +85,23 @@ function YouTubeIcon({ className }: { className?: string }) {
 }
 
 export default function Footer() {
-  const textColor = siteConfig.branding.colors.text.primary;
-  const borderColor = siteConfig.branding.colors.border;
+  const c = siteConfig.branding.colors;
 
   return (
     <footer
       className="w-full border-t"
-      style={{
-        backgroundColor: siteConfig.branding.colors.background.primary,
-        borderColor,
-        color: textColor,
-      }}
+      style={{ backgroundColor: c.background.primary, borderColor: c.border, color: c.text.primary }}
       aria-label="Site footer"
     >
-      <Container className="py-12 lg:py-16">
-        <div className="grid items-start gap-10 lg:grid-cols-[1fr_auto_auto] lg:gap-16">
-          {/* Left: Logo, address, contact, social */}
-          <div className="flex flex-col gap-6">
+      <Container className="py-14 lg:py-20">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr] lg:gap-10">
+
+          {/* Col 1 — Brand */}
+          <div className="flex flex-col gap-5">
             <Link
               href="/"
-              className="text-xl font-semibold tracking-tight transition-opacity hover:opacity-90"
-              style={{ color: textColor }}
+              className="text-xl font-bold tracking-tight transition-opacity hover:opacity-90 w-fit"
+              style={{ color: c.text.primary }}
             >
               {siteConfig.logoUrl ? (
                 <Image
@@ -113,108 +115,69 @@ export default function Footer() {
                 siteConfig.businessName
               )}
             </Link>
-
-            <div>
-              <h3
-                className="mb-1 text-sm font-semibold uppercase tracking-wider"
-                style={{ color: siteConfig.branding.colors.text.secondary }}
-              >
-                Address
-              </h3>
-              <p className="text-sm">{addressLine}</p>
-            </div>
-
-            <div>
-              <h3
-                className="mb-1 text-sm font-semibold uppercase tracking-wider"
-                style={{ color: siteConfig.branding.colors.text.secondary }}
-              >
-                Contact
-              </h3>
-              <ul className="space-y-1 text-sm">
-                <li>
-                  <a
-                    href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
-                    className="hover:opacity-80"
-                  >
-                    {siteConfig.phone}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`mailto:${siteConfig.email}`}
-                    className="hover:opacity-80"
-                  >
-                    {siteConfig.email}
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div className="flex items-center gap-3">
-              {socialLinks.map(({ key, href, label, icon: Icon }) => {
-                const wrapperClass =
-                  "flex h-9 w-9 items-center justify-center rounded-full border transition-colors";
-                const style = { color: textColor, borderColor };
-                if (href) {
-                  return (
-                    <a
-                      key={key}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={label}
-                      className={`${wrapperClass} hover:opacity-80`}
-                      style={{
-                        ...style,
-                        borderColor: siteConfig.branding.colors.border,
-                      }}
-                    >
-                      <Icon className="h-4 w-4" />
-                    </a>
-                  );
-                }
-                return (
-                  <span
-                    key={key}
-                    aria-hidden
-                    className={wrapperClass}
-                    style={style}
-                  >
-                    <Icon className="h-4 w-4" />
-                  </span>
-                );
-              })}
-            </div>
+            <p className="text-sm leading-relaxed max-w-xs" style={{ color: c.text.secondary }}>
+              {siteConfig.tagline}
+            </p>
           </div>
 
-          {/* Middle: Primary nav */}
-          <nav aria-label="Footer primary">
-            <ul className="space-y-3">
-              {primaryNav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm hover:opacity-80"
-                    style={{ color: textColor }}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+          {/* Col 2 — Contact */}
+          <div className="flex flex-col gap-5">
+            <h3 className="text-sm font-semibold" style={{ color: c.text.primary }}>
+              Contact
+            </h3>
+            <ul className="flex flex-col gap-3 text-sm" style={{ color: c.text.secondary }}>
+              <li>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="transition-opacity hover:opacity-70"
+                  style={{ color: c.text.secondary }}
+                >
+                  {siteConfig.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`tel:${siteConfig.phone.replace(/\D/g, "")}`}
+                  className="transition-opacity hover:opacity-70"
+                  style={{ color: c.text.secondary }}
+                >
+                  {siteConfig.phone}
+                </a>
+              </li>
+              <li>
+                <span>
+                  {siteConfig.address.city} —<br />
+                  {siteConfig.address.line1},<br />
+                  {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}
+                </span>
+              </li>
+              <li className="pt-1">
+                <ul className="flex flex-col gap-1">
+                  {hoursRows.map(({ days, time }) => (
+                    <li key={days}>
+                      <span className="font-medium" style={{ color: c.text.primary }}>{days}</span>
+                      {" · "}
+                      {time}
+                    </li>
+                  ))}
+                </ul>
+              </li>
             </ul>
-          </nav>
+          </div>
 
-          {/* Right: Secondary nav */}
-          <div className="flex flex-col gap-6">
-            <nav aria-label="Footer secondary">
-              <ul className="space-y-3">
-                {secondaryNav.map((item) => (
+          {/* Col 3 — Links */}
+          <div className="flex flex-col gap-5">
+            <h3 className="text-sm font-semibold" style={{ color: c.text.primary }}>
+              Links
+            </h3>
+            <nav aria-label="Footer links">
+              <ul className="flex flex-col gap-3">
+                {primaryNav.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-sm hover:opacity-80"
-                      style={{ color: textColor }}
+                      className="text-sm transition-opacity hover:opacity-70"
+                      style={{ color: c.text.secondary }}
                     >
                       {item.label}
                     </Link>
@@ -223,18 +186,46 @@ export default function Footer() {
               </ul>
             </nav>
           </div>
+
+          {/* Col 4 — Get in Touch */}
+          <div className="flex flex-col gap-5">
+            <h3 className="text-sm font-semibold" style={{ color: c.text.primary }}>
+              Get in Touch
+            </h3>
+            <div className="flex flex-wrap gap-2.5">
+              {socialLinks.map(({ key, href, label, icon: Icon }) => {
+                const shared = {
+                  style: { color: c.text.primary, borderColor: c.border },
+                  className: "flex h-9 w-9 items-center justify-center rounded-lg border transition-opacity",
+                };
+                return href ? (
+                  <a
+                    key={key}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    {...shared}
+                    className={`${shared.className} hover:opacity-60`}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                ) : (
+                  <span key={key} aria-hidden {...shared}>
+                    <Icon className="h-4 w-4" />
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </Container>
 
-      {/* Bottom bar: legal links */}
-      <div
-        className="border-t py-4"
-        style={{ borderColor }}
-      >
+      {/* Bottom bar */}
+      <div className="border-t py-4" style={{ borderColor: c.border }}>
         <Container className="flex flex-col items-center justify-between gap-3 text-sm sm:flex-row">
-          <p
-            style={{ color: siteConfig.branding.colors.text.secondary }}
-          >
+          <p style={{ color: c.text.secondary }}>
             © {currentYear} {siteConfig.businessName}. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-1">
@@ -242,8 +233,8 @@ export default function Footer() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="hover:opacity-80"
-                style={{ color: textColor }}
+                className="transition-opacity hover:opacity-70"
+                style={{ color: c.text.secondary }}
               >
                 {item.label}
               </Link>
